@@ -14,12 +14,6 @@ dd,dt {
     margin: 0;
     padding: 0;
 }
-/*
-
-dd, dt {
-    display: inline-block;
-}
-*/
 
 .container {
     width: 100%;
@@ -142,21 +136,19 @@ dd, dt {
     align-items: center;
 }
 
-.car-info__seller {
-    width: 45%;
-    font-size: 20px;
-    color: red;
-}
-
 .car-info__car-consume {
     width: 100%;
-    font-size: 12px;
+    font-size: 16px;
+    display: flex;
+    justify-content: flex-start;
+    margin: 5px 0;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
 }
 
-ul {
-    text-decoration: none;
+.car-info__car-consume dl {
     display: flex;
-    list-style: none;
     gap: 20px;
     width: 100%;
 }
@@ -164,7 +156,17 @@ ul {
 .car-info__car-consume_road,
 .car-info__car-consume_city,
 .car-info__car-consume_mixed {
-    width: 30%;
+    width: 33%;
     font-size: 12px;
     text-decoration: none;
 }
+
+
+.car-info__seller {
+    width: 45%;
+    font-size: 20px;
+    color: red;
+}
+
+
+

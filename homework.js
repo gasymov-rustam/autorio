@@ -81,12 +81,18 @@ function cardInfoHtml(card) {
                         <dt>⛽  fuel -</dt>
                         <dd>${card.fuel}</dd>
                     </div>
-                <p class="car-info__consume">
-                    consume:   <ul>
-                                    <li class="car-info__consume_road">road: ${card.consume?.road || 'not indicated'}</li>
-                                    <li class="car-info__consume_city">city: ${card.consume?.city || 'not indicated'}</li>
-                                    <li class="car-info__consume_mixed">mixed: ${card.consume?.mixed || 'not indicated'}</li>
-                               </ul>
+                    <div class="car-info__car-consume">
+                        <dt>consume -</dt>
+                        <dd>${card.consume? "":"not indicated"}</dd>
+                                <dl>
+                                    <dt class="car-info__consume_road">road: ${card.consume?.road || 'not indicated'}</dt>
+                                    <dt class="car-info__consume_city">city: ${card.consume?.city || 'not indicated'}</dt>
+                                    <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || 'not indicated'}</dt>
+                               </dl>
+                    </div>
+                    
+              <p class="car-info__consume">
+                     
                 </p>
                 <p class="car-info__seller">
                     seller - ${card.seller}
@@ -99,36 +105,7 @@ function cardInfoHtml(card) {
         </div>`
 }
 
-
-/*
-const abd = {
-    "id": "89aed5b8c686ebd713a62873e4cd756abab7a106",
-    "make": "BMW",
-    "model": "M3",
-    "year": 2010,
-    "img": "http://dummyimage.com/153x232.jpg/cc0000/ffffff",
-    "color": "Goldenrod",
-    "vin": "1G6DW677550624991",
-    "country": "United States",
-    "rating": 1,
-    "price": 2269,
-    "views": 5,
-    "seller": "Ellery Girardin",
-    "vin_check": true,
-    "top": false,
-    "timestamp": 1601652988000,
-    "phone": "+1 (229) 999-8553",
-    "fuel": "Benzin",
-    "engine_volume": 1.4,
-    "transmission": "CVT",
-    "odo": 394036,
-    "consume": {
-        "city": 12.3,
-        "mixed": 8.4
-    }
-}
-*/
-
+console.log(abd.consume)
 /*
 printCardsHtml(list, CAR);
 

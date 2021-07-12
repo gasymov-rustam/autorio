@@ -1,5 +1,9 @@
 const CAR = JSON.parse(DATA);
+delete CAR[0].consume;
+delete CAR[0].seller;
 const list = document.getElementById('list');
+console.log(CAR);
+
 const abd = {
     "id": "89aed5b8c686ebd713a62873e4cd756abab7a106",
     "make": "BMW",
@@ -27,22 +31,23 @@ const abd = {
     }
 }
 
-// console.log(cardInfoHtml(abd));
+printHtml(list, CAR);
 
-console.log(typeof printHtmlAllCars(list, CAR));
-console.log(printHtmlAllCars(list, CAR));
-
-printHtmlAllCars(list, CAR)
-
-function printHtmlAllCars(section, arr) {
-    return section.innerHTML = carsArr(arr).join('');
+function printHtml(section, arr) {
+    return section.innerHTML = carsArray(arr).join('');
 }
 
-function carsArr(cars) {
+function carsArray(cars) {
     return cars.map(car => cardInfoHtml(car));
 }
 
 function cardInfoHtml(card) {
+    const CONSUME = `<dl>
+                    <dt class="car-info__consume_road">road: ${card.consume?.road || 'not indicated'}</dt>
+                    <dt class="car-info__consume_city">city: ${card.consume?.city || 'not indicated'}</dt>
+                    <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || 'not indicated'}</dt>
+                     </dl>`;
+
     return `<div class="card">
             <img src="${card.img}" alt="${card.make} ${card.model}" class="car-photo">
             <div class="car-info">
@@ -78,34 +83,22 @@ function cardInfoHtml(card) {
                         <dd>&#9942; ${card.odo} km</dd>
                     </div>
                     <div class="car-info__fuel">
-                        <dt>⛽  fuel -</dt>
-                        <dd>${card.fuel}</dd>
+                        <dt>fuel -</dt>
+                        <dd>⛽  ${card.fuel}</dd>
                     </div>
                     <div class="car-info__car-consume">
                         <dt>consume -</dt>
-                        <dd>${card.consume? "":"not indicated"}</dd>
-                                <dl>
-                                    <dt class="car-info__consume_road">road: ${card.consume?.road || 'not indicated'}</dt>
-                                    <dt class="car-info__consume_city">city: ${card.consume?.city || 'not indicated'}</dt>
-                                    <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || 'not indicated'}</dt>
-                               </dl>
+                        <dd>${card.consume ? CONSUME : "not indicated"}</dd>    
                     </div>
-                    
-              <p class="car-info__consume">
-                     
-                </p>
-                <p class="car-info__seller">
-                    seller - ${card.seller}
-                </p>
-                <p class="car-info__price">
-                    price - ${card.price}$
-                </p>
+                    <div class="car-info__seller">
+                        <dt>seller -</dt>
+                        <dd>${card?.seller || 'not indicated'}</dd>    
+                    </div>
                 </dl>
             </div>
         </div>`
 }
 
-console.log(abd.consume)
 /*
 printCardsHtml(list, CAR);
 

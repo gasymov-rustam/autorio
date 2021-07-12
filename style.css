@@ -61,7 +61,7 @@ dd,dt {
 
 .car-photo {
     width: 30%;
-    height: 200px;
+    min-height: 100px;
     object-fit: cover;
     object-position: center;
     border: 1px solid grey;
@@ -142,9 +142,8 @@ dd,dt {
     display: flex;
     justify-content: flex-start;
     margin: 5px 0;
-    align-items: center;
     gap: 5px;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .car-info__car-consume dl {
@@ -163,9 +162,11 @@ dd,dt {
 
 
 .car-info__seller {
-    width: 45%;
+    width: 100%;
     font-size: 20px;
     color: red;
+    display: flex;
+    gap: 10px;
 }
 
 

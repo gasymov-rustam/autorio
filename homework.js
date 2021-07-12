@@ -3,7 +3,26 @@ delete CAR[0].consume;
 delete CAR[0].seller;
 delete CAR[1].rating;
 const list = document.getElementById('list');
-console.log(CAR);
+
+/*
+masonryBtnsEl.addEventListener('click', event => {
+    const currentBtn = event.target.closest('button')
+    if (currentBtn) {
+        const type = currentBtn.dataset.type
+        const listElCurrentClass = Array.from(listEl.classList).find(className => className.includes('cols'))
+        listEl.classList.remove(listElCurrentClass)
+        listEl.classList.add(`cols-${type}`)
+        Array.from(masonryBtnsEl.children).forEach(btn => {
+            if (btn === currentBtn) {
+                btn.classList.add('active')
+            } else{
+                btn.classList.remove('active')
+            }
+        })
+    }
+})
+*/
+
 
 const abd = {
     "id": "89aed5b8c686ebd713a62873e4cd756abab7a106",

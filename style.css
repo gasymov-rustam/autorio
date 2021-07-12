@@ -52,6 +52,15 @@ table {
     box-sizing: border-box;
 }
 
+button {
+    cursor: pointer;
+    border: inherit;
+    border-radius: 0;
+    outline: none;
+    color: inherit;
+    background: inherit;
+}
+
 dl {
     width: 100%;
     display: flex;
@@ -86,6 +95,30 @@ dd,dt {
 
 .search-form {
     width: 100%;
+    display: flex;
+}
+
+.search-form__square {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    transition: .4s;
+}
+
+.search-form__btn {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px;
+    background: antiquewhite;
+}
+
+.search-form__btn:hover {
+    background: yellowgreen;
+}
+
+.active {
+    background: yellowgreen;
 }
 
 .filters {
@@ -126,10 +159,13 @@ dd,dt {
 .car-info__make {
     color: blueviolet;
     text-transform: uppercase;
+    font-size: 20px;
 }
 
 .car-info__model {
+    font-size: 20px;
     text-transform: uppercase;
+    margin-left: 10px;
 }
 
 .car-info__country {

@@ -109,7 +109,7 @@ dd,dt {
 
 .car-photo {
     width: 30%;
-    min-height: 100px;
+    height: 300px;
     object-fit: cover;
     object-position: center;
     border: 1px solid grey;
@@ -124,13 +124,11 @@ dd,dt {
 }
 
 .car-info__make {
-    min-width: 5%;
     color: blueviolet;
     text-transform: uppercase;
 }
 
 .car-info__model {
-    width: 60%;
     text-transform: uppercase;
 }
 

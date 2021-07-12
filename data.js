@@ -9,7 +9,7 @@ const DATA = `
       "color": "Goldenrod",
       "vin": "1G6DW677550624991",
       "country": "United States",
-      "rating": 1,
+      "rating": 1.5,
       "price": 2269,
       "views": 5,
       "seller": "Ellery Girardin",

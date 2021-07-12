@@ -1,6 +1,7 @@
 const CAR = JSON.parse(DATA);
 delete CAR[0].consume;
 delete CAR[0].seller;
+delete CAR[1].rating;
 const list = document.getElementById('list');
 console.log(CAR);
 
@@ -42,6 +43,21 @@ function carsArray(cars) {
 }
 
 function cardInfoHtml(card) {
+    // let a = 3.5;
+    // console.log(Math.round(a));
+    let str = '';
+    for (let i = 1; i <= 5; i++) {
+        if (card.rating >= 0) {
+            if (card.rating >= i) {
+                str += '&#9733;';
+            } else if (Math.round(card.rating) == i && !Number.isInteger(card.rating)) {
+                str += '&#11240;';
+            } else {
+                str += '&#9734;';
+            }
+        }
+    }
+
     const CONSUME = `<dl>
                     <dt class="car-info__consume_road">road: ${card.consume?.road || 'not indicated'}</dt>
                     <dt class="car-info__consume_city">city: ${card.consume?.city || 'not indicated'}</dt>
@@ -65,6 +81,10 @@ function cardInfoHtml(card) {
                     <div class="car-info__year">
                         <dt>year -</dt>
                         <dd>${card.year}</dd>
+                    </div>
+                    <div class="car-info__rating">
+<!--                        <dd>${card?.rating}</dd>-->
+                        <dd>${str || 'not inspected'}</dd>
                     </div>
                     <div class="car-info__price">
                         <dt>price -</dt>
@@ -99,50 +119,4 @@ function cardInfoHtml(card) {
         </div>`
 }
 
-/*
-printCardsHtml(list, CAR);
 
-function printCardsHtml(section, arrCars) {
-    return section.innerHTML = carsArr(arrCars).join('');
-}
-
-function carsArr(carsArr) {
-    return carsArr.map(car => carInfo(car));
-}
-
-function carInfo(car) {
-    return `<div class="card">
-                <img src="${car.img}" alt="${car.make} ${car.model}" class="car-photo">
-                <div class="car-info">
-                    <h2 class="car-info__make">"${car.make}"</h2>
-                    <h3 class="car-info__model">"${car.model}"</h3>
-                    <p class="car-info__country">
-                        country - ${car.country}
-                    </p>
-                    <p class="car-info__color">
-                        color - ${car.color}
-                    </p>
-                    <p class="car-info__year">
-                        year - ${car.year}
-                    </p>
-                    <p class="car-info__engine-volume">
-                        engine volume - ${car.engine_volume}
-                    </p>
-                    <p class="car-info__transmission">
-                        transmission - ${car.transmission}
-                    </p>
-                    <p class="car-info__odo">
-                        odo - ${car.odo}
-                    </p>
-                    <p class="car-info__fuel">
-                        fuel - ${car.fuel}
-                    </p>
-                    <p class="car-info__seller">
-                        seller - ${car.seller}
-                    </p>
-                    <p class="car-info__price">
-                        price - ${car.price}$
-                    </p>
-              </div>
-            </div>`
-}*/

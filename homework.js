@@ -3,7 +3,27 @@ delete CAR[0].consume;
 delete CAR[0].seller;
 delete CAR[1].rating;
 const list = document.getElementById('list');
+const searchForm__square = document.getElementById('search-form__square');
 
+searchForm__square.addEventListener('click', e => {
+    const currentBtn = e.target.closest('button');
+    if (currentBtn){
+        const type = currentBtn.dataset.type;
+        console.log(type);
+        const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
+        console.log(listCurrentClass);
+        list.classList.remove('listCurrentClass');
+        list.classList.add(`cols-${type}`);
+        console.log(Array.from(list.classList))
+        Array.from(searchForm__square.children).forEach(btn => {
+            if (btn === currentBtn) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        })
+    }
+})
 /*
 masonryBtnsEl.addEventListener('click', event => {
     const currentBtn = event.target.closest('button')
@@ -62,8 +82,6 @@ function carsArray(cars) {
 }
 
 function cardInfoHtml(card) {
-    // let a = 3.5;
-    // console.log(Math.round(a));
     let str = '';
     for (let i = 1; i <= 5; i++) {
         if (card.rating >= 0) {

@@ -113,10 +113,6 @@ dd,dt {
     background: antiquewhite;
 }
 
-.search-form__btn:hover {
-    background: yellowgreen;
-}
-
 .active {
     background: yellowgreen;
 }
@@ -126,18 +122,26 @@ dd,dt {
 }
 
 .list {
-    width: 70%;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cols-2>.card {
+    width: calc((100% - 20px)/2);
+}
+
+.cols-2>.card>.car-photo {
+    width: 100%;
 }
 
 .card {
     display: flex;
-    width: 100%;
     flex-wrap: wrap;
     border: 1px solid grey;
     border-radius:  5px;
     gap: 30px;
     padding: 10px;
-    margin-bottom: 20px;
 }
 
 .car-photo {

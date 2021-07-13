@@ -7,14 +7,29 @@ const searchForm__square = document.getElementById('search-form__square');
 
 searchForm__square.addEventListener('click', e => {
     const currentBtn = e.target.closest('button');
+    if (currentBtn) {
+        const type = currentBtn.dataset.type;
+        const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
+        list.classList.remove(listCurrentClass);
+        list.classList.add(`cols-${type}`);
+        Array.from(searchForm__square.children).forEach( btn => {
+            if (btn === currentBtn) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        })
+    }
+})
+
+/*
+searchForm__square.addEventListener('click', e => {
+    const currentBtn = e.target.closest('button');
     if (currentBtn){
         const type = currentBtn.dataset.type;
-        console.log(type);
         const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
-        console.log(listCurrentClass);
-        list.classList.remove('listCurrentClass');
+        list.classList.remove(listCurrentClass);
         list.classList.add(`cols-${type}`);
-        console.log(Array.from(list.classList))
         Array.from(searchForm__square.children).forEach(btn => {
             if (btn === currentBtn) {
                 btn.classList.add('active');
@@ -24,6 +39,7 @@ searchForm__square.addEventListener('click', e => {
         })
     }
 })
+*/
 /*
 masonryBtnsEl.addEventListener('click', event => {
     const currentBtn = event.target.closest('button')

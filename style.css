@@ -100,12 +100,26 @@ dd,dt {
     gap: 20px;
 }
 
+.search-form__filter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.search-form__filterBy {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 .search-form__sortPrice {
     padding: 2px 6px;
 }
 
+.search-form__filter {
+    display: flex;
+}
+
 .search-form__square {
-    /*width: 100%;*/
     display: flex;
     justify-content: flex-end;
     gap: 15px;

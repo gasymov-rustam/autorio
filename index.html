@@ -18,8 +18,16 @@
 </div>
 <main class="container content">
     <div class="search-form">
+        <div class="search-form__filter">
+            <div class="search-form__filterBy" id="filterBy">
+                <input type="checkbox" id="filterCountry">
+                <label for="filterCountry">filter by Country</label>
+                <input type="checkbox" id="filterSeller">
+                <label for="filterSeller">filter by Seller</label>
+            </div>
+        </div>
 
-        <select name="" class="search-form__sortPrice" id="sort">
+        <select name="" class="search-form__sortPrice" id="sortBy">
             <option hidden>to sort</option>
             <option value="1">price to highest</option>
             <option value="2">price to lowest</option>

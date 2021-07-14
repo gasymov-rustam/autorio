@@ -4,7 +4,9 @@ delete CAR[0].seller;
 // delete CAR[1].rating;
 const list = document.getElementById('list');
 const searchFormSquare = document.getElementById('search-form__square');
-const searchFormSort = document.getElementById('sort');
+const searchFormSort = document.getElementById('sortBy');
+const searchFormFilter = document.getElementById('filterBy');
+
 
 searchFormSquare.addEventListener('click', e => {
     const currentBtn = e.target.closest('button');
@@ -137,5 +139,19 @@ searchFormSort.addEventListener("change", e => {
     }
 })
 
+searchFormFilter.addEventListener('change', e=> {
+    const currentInput = e.target.closest('input');
+    Array.from(searchFormFilter.children).forEach(inp => {
+        if (inp === currentInput) {
+            inp.checked;
+        } else {
+            inp.checked = false;
+        }
+    })
+
+    /*const as = currentInput.getAttribute('checked');
+    if (currentInput.checked) {
+    }*/
+})
 
 

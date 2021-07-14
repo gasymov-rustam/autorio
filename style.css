@@ -22,25 +22,31 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -67,7 +73,7 @@ dl {
     flex-wrap: wrap;
 }
 
-dd,dt {
+dd, dt {
     margin: 0;
     padding: 0;
 }
@@ -102,9 +108,9 @@ dd,dt {
 
 .search-form__filter {
     display: flex;
-    flex-direction: column;
     gap: 5px;
 }
+
 .search-form__filterBy {
     display: flex;
     gap: 10px;
@@ -147,11 +153,11 @@ dd,dt {
     flex-wrap: wrap;
 }
 
-.cols-2>.card {
-    width: calc((100% - 20px)/2);
+.cols-2 > .card {
+    width: calc((100% - 20px) / 2);
 }
 
-.cols-2>.card>.car-photo {
+.cols-2 > .card > .car-photo {
     width: 100%;
 }
 
@@ -159,7 +165,7 @@ dd,dt {
     display: flex;
     flex-wrap: wrap;
     border: 1px solid grey;
-    border-radius:  5px;
+    border-radius: 5px;
     gap: 30px;
     padding: 10px;
 }
@@ -196,7 +202,7 @@ dd,dt {
     width: 100%;
     color: aqua;
     text-decoration: underline;
-    font-size:  20px;
+    font-size: 20px;
     gap: 10px;
     display: flex;
     justify-content: flex-start;

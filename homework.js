@@ -8,6 +8,9 @@ const searchFormSort = document.getElementById('sortBy');
 const searchFormFilter = document.getElementById('filterBy');
 
 
+let filterNewArrFromCar = CAR;
+
+
 searchFormSquare.addEventListener('click', e => {
     const currentBtn = e.target.closest('button');
     if (currentBtn) {
@@ -110,48 +113,63 @@ function cardInfoHtml(card) {
         </div>`
 }
 
-function sortToHighest (sortKey){
-    return (a,b) => a[sortKey] - b[sortKey];
+function sortToHighest(sortKey) {
+    return (a, b) => a[sortKey] - b[sortKey];
 }
 
-function sortToLowest (sortKey){
-    return (a,b) => (a[sortKey] - b[sortKey]) *-1;
+function sortToLowest(sortKey) {
+    return (a, b) => (a[sortKey] - b[sortKey]) * -1;
+}
+
+function filterBy(arr, key) {
+    return arr.filter(filter => filter[key]);
 }
 
 // searchFormSort.addEventListener('change', function (e) {
 searchFormSort.addEventListener("change", e => {
     const currentSort = e.target.value;
     if (currentSort == 1) {
-        CAR.sort(sortToHighest('price'));
-        printHtml(list, CAR);
+        filterNewArrFromCar.sort(sortToHighest('price'));
+        printHtml(list, filterNewArrFromCar);
     }
     if (currentSort == 2) {
-        CAR.sort(sortToLowest('price'));
-        printHtml(list, CAR);
+        filterNewArrFromCar.sort(sortToLowest('price'));
+        printHtml(list, filterNewArrFromCar);
     }
     if (currentSort == 3) {
-        CAR.sort(sortToLowest('rating'));
-        printHtml(list, CAR);
+        filterNewArrFromCar.sort(sortToLowest('rating'));
+        printHtml(list, filterNewArrFromCar);
     }
     if (currentSort == 4) {
-        CAR.sort(sortToHighest('rating'));
-        printHtml(list, CAR);
+        filterNewArrFromCar.sort(sortToHighest('rating'));
+        printHtml(list, filterNewArrFromCar);
     }
 })
 
-searchFormFilter.addEventListener('change', e=> {
+searchFormFilter.addEventListener('change', e => {
     const currentInput = e.target.closest('input');
     Array.from(searchFormFilter.children).forEach(inp => {
         if (inp === currentInput) {
             inp.checked;
+            if (inp.value == 1) {
+                filterNewArrFromCar = filterBy(CAR, 'country');
+                printHtml(list, filterNewArrFromCar);
+                console.log(filterNewArrFromCar)
+            } else if (inp.value == 2) {
+                filterNewArrFromCar = filterBy(CAR, 'rating');
+                printHtml(list, filterNewArrFromCar);
+                console.log(filterNewArrFromCar)
+            } else if (inp.value == 3) {
+                filterNewArrFromCar = CAR;
+                printHtml(list, filterNewArrFromCar);
+                console.log(filterNewArrFromCar)
+            }
         } else {
             inp.checked = false;
         }
     })
-
-    /*const as = currentInput.getAttribute('checked');
-    if (currentInput.checked) {
-    }*/
 })
+
+
 
 

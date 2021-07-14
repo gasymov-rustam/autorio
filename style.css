@@ -96,10 +96,12 @@ dd,dt {
 .search-form {
     width: 100%;
     display: flex;
+    justify-content: flex-end;
+    gap: 20px;
 }
 
 .search-form__square {
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
     justify-content: flex-end;
     gap: 15px;

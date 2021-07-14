@@ -12,24 +12,6 @@ searchForm__square.addEventListener('click', e => {
         const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
         list.classList.remove(listCurrentClass);
         list.classList.add(`cols-${type}`);
-        Array.from(searchForm__square.children).forEach( btn => {
-            if (btn === currentBtn) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        })
-    }
-})
-
-/*
-searchForm__square.addEventListener('click', e => {
-    const currentBtn = e.target.closest('button');
-    if (currentBtn){
-        const type = currentBtn.dataset.type;
-        const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
-        list.classList.remove(listCurrentClass);
-        list.classList.add(`cols-${type}`);
         Array.from(searchForm__square.children).forEach(btn => {
             if (btn === currentBtn) {
                 btn.classList.add('active');
@@ -39,53 +21,6 @@ searchForm__square.addEventListener('click', e => {
         })
     }
 })
-*/
-/*
-masonryBtnsEl.addEventListener('click', event => {
-    const currentBtn = event.target.closest('button')
-    if (currentBtn) {
-        const type = currentBtn.dataset.type
-        const listElCurrentClass = Array.from(listEl.classList).find(className => className.includes('cols'))
-        listEl.classList.remove(listElCurrentClass)
-        listEl.classList.add(`cols-${type}`)
-        Array.from(masonryBtnsEl.children).forEach(btn => {
-            if (btn === currentBtn) {
-                btn.classList.add('active')
-            } else{
-                btn.classList.remove('active')
-            }
-        })
-    }
-})
-*/
-
-
-const abd = {
-    "id": "89aed5b8c686ebd713a62873e4cd756abab7a106",
-    "make": "BMW",
-    "model": "M3",
-    "year": 2010,
-    "img": "http://dummyimage.com/153x232.jpg/cc0000/ffffff",
-    "color": "Goldenrod",
-    "vin": "1G6DW677550624991",
-    "country": "United States",
-    "rating": 1,
-    "price": 2269,
-    "views": 5,
-    "seller": "Ellery Girardin",
-    "vin_check": true,
-    "top": false,
-    "timestamp": 1601652988000,
-    "phone": "+1 (229) 999-8553",
-    "fuel": "Benzin",
-    "engine_volume": 1.4,
-    "transmission": "CVT",
-    "odo": 394036,
-    "consume": {
-        "city": 12.3,
-        "mixed": 8.4
-    }
-}
 
 printHtml(list, CAR);
 

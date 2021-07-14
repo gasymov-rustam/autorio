@@ -18,54 +18,57 @@
 </div>
 <main class="container content">
     <div class="search-form">
-        <div class="search-form__sortPrice">
-            <select name="" id="sortPrice">
-                <option value="">sort by price</option>
-                <option value="">to highest</option>
-                <option value="">to lowest</option>
-            </select>
-        </div>
+
+        <select name="" class="search-form__sortPrice" id="sort">
+            <option hidden>to sort</option>
+            <option value="1">price to highest</option>
+            <option value="2">price to lowest</option>
+            <option value="3">rating to lowest</option>
+            <option value="4">rating to highest</option>
+        </select>
+
         <div class="search-form__square" id="search-form__square">
             <button class="search-form__btn active" data-type="1">&#8862;</button>
             <button class="search-form__btn" data-type="2">&#8863;</button>
         </div>
+
     </div>
     <aside class="filters"></aside>
     <section class="list cols-1" id="list">
-<!--        <div class="card">
-            <img src="http://dummyimage.com/153x232.jpg/cc0000/ffffff" alt="" class="car-photo">
-            <div class="car-info">
-                <h2 class="car-info__make">"BMW"</h2>q`
-                <h3 class="car-info__model">"M3"</h3>
-                <p class="car-info__country">
-                    country - USA
-                </p>
-                <p class="car-info__color">
-                    color - Goldenrod
-                </p>
-                <p class="car-info__year">
-                    year - 2010
-                </p>
-                <p class="car-info__engine-volume">
-                    engine volume - 1.4
-                </p>
-                <p class="car-info__transmission">
-                    transmission - CVT
-                </p>
-                <p class="car-info__odo">
-                    odo - 394036
-                </p>
-                <p class="car-info__fuel">
-                    fuel - benzin
-                </p>
-                <p class="car-info__seller">
-                    seller - Ellery Girardin
-                </p>
-                <p class="car-info__price">
-                    price - 2269$
-                </p>
-            </div>
-        </div>-->
+        <!--        <div class="card">
+                    <img src="http://dummyimage.com/153x232.jpg/cc0000/ffffff" alt="" class="car-photo">
+                    <div class="car-info">
+                        <h2 class="car-info__make">"BMW"</h2>q`
+                        <h3 class="car-info__model">"M3"</h3>
+                        <p class="car-info__country">
+                            country - USA
+                        </p>
+                        <p class="car-info__color">
+                            color - Goldenrod
+                        </p>
+                        <p class="car-info__year">
+                            year - 2010
+                        </p>
+                        <p class="car-info__engine-volume">
+                            engine volume - 1.4
+                        </p>
+                        <p class="car-info__transmission">
+                            transmission - CVT
+                        </p>
+                        <p class="car-info__odo">
+                            odo - 394036
+                        </p>
+                        <p class="car-info__fuel">
+                            fuel - benzin
+                        </p>
+                        <p class="car-info__seller">
+                            seller - Ellery Girardin
+                        </p>
+                        <p class="car-info__price">
+                            price - 2269$
+                        </p>
+                    </div>
+                </div>-->
     </section>
 </main>
 </body>

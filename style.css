@@ -100,6 +100,10 @@ dd,dt {
     gap: 20px;
 }
 
+.search-form__sortPrice {
+    padding: 2px 6px;
+}
+
 .search-form__square {
     /*width: 100%;*/
     display: flex;

@@ -1,18 +1,19 @@
 const CAR = JSON.parse(DATA);
 delete CAR[0].consume;
 delete CAR[0].seller;
-delete CAR[1].rating;
+// delete CAR[1].rating;
 const list = document.getElementById('list');
-const searchForm__square = document.getElementById('search-form__square');
+const searchFormSquare = document.getElementById('search-form__square');
+const searchFormSort = document.getElementById('sort');
 
-searchForm__square.addEventListener('click', e => {
+searchFormSquare.addEventListener('click', e => {
     const currentBtn = e.target.closest('button');
     if (currentBtn) {
         const type = currentBtn.dataset.type;
         const listCurrentClass = Array.from(list.classList).find(className => className.includes('cols'));
         list.classList.remove(listCurrentClass);
         list.classList.add(`cols-${type}`);
-        Array.from(searchForm__square.children).forEach(btn => {
+        Array.from(searchFormSquare.children).forEach(btn => {
             if (btn === currentBtn) {
                 btn.classList.add('active');
             } else {
@@ -106,5 +107,35 @@ function cardInfoHtml(card) {
             </div>
         </div>`
 }
+
+function sortToHighest (sortKey){
+    return (a,b) => a[sortKey] - b[sortKey];
+}
+
+function sortToLowest (sortKey){
+    return (a,b) => (a[sortKey] - b[sortKey]) *-1;
+}
+
+// searchFormSort.addEventListener('change', function (e) {
+searchFormSort.addEventListener("change", e => {
+    const currentSort = e.target.value;
+    if (currentSort == 1) {
+        CAR.sort(sortToHighest('price'));
+        printHtml(list, CAR);
+    }
+    if (currentSort == 2) {
+        CAR.sort(sortToLowest('price'));
+        printHtml(list, CAR);
+    }
+    if (currentSort == 3) {
+        CAR.sort(sortToLowest('rating'));
+        printHtml(list, CAR);
+    }
+    if (currentSort == 4) {
+        CAR.sort(sortToHighest('rating'));
+        printHtml(list, CAR);
+    }
+})
+
 
 

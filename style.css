@@ -132,11 +132,39 @@ dd, dt {
     transition: .4s;
 }
 
+.search-form__search {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    /* flex-direction: column; */
+}
+
+.search-form__searchTo,
+.search-form__searchResult {
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 2px 4px;
+    transition: 1s;
+}
+
+.search-form_disactive {
+    visibility: hidden;
+    opacity: 0;
+}
+
 .search-form__btn {
     border: 1px solid black;
     border-radius: 4px;
     padding: 2px;
     background: antiquewhite;
+}
+
+
+
+.searchBtn {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px 6px;
 }
 
 .active {

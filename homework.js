@@ -126,7 +126,7 @@ searchFormSearch.addEventListener('submit', e => {
   printHtml(list, CAR);
   if (CAR.length !== carArrLength) CAR = JSON.parse(DATA);
 })
- 
+// -------------------------------------------------------------------------------
 printHtml(list, CAR);
 
 function printHtml(section, arr) {

@@ -29,7 +29,7 @@ searchFormSquare.addEventListener('click', e => {
 })
 
 // ------------------------------------------------------------------------------------------
-/*function searchToArrCompire() {
+function searchToArrCompire() {
   const searchField = Array.from(arguments);
   return searchField;
 }
@@ -51,32 +51,32 @@ function searchToResults(arr, inpBtn, searchField) {
 }
 
 function searchShowCurrentResult(arrCurrentLength, arrConstLength) {
-  if (arrCurrentLength !== arrConstLength) {
-    return true;
-  } else {
-    console.log(123456789);
-    return false;
-  }
+  if (arrCurrentLength !== arrConstLength) return true;
+  else return false;
 }
 
 searchFormSearch.addEventListener('keyup', e => {
   searchToResults(JSON.parse(DATA), searchToBtn(e.target), searchToArrCompire('make', 'model', 'year', 'vin', 'country'));
-  console.log(CAR.length);
   if (searchShowCurrentResult(CAR.length, carArrLength)) {
     searchCurrentResult.classList.remove('search-form_disactive');
     searchCurrentResult.value = `found ${CAR.length} results`;
-    console.log(CAR.length);
-    console.log(carArrLength);
   } else {
     searchCurrentResult.classList.add('search-form_disactive');
+  }
+  if (e.code === 'Enter') {
+    searchCurrentResult.classList.add('search-form_disactive');
+    printHtml(list, searchToResults(JSON.parse(DATA), searchToBtn(e.target), searchToArrCompire('make', 'model', 'year', 'vin', 'country')));
   }
 })
 
 searchFormSearch.addEventListener('submit', e => {
   e.preventDefault();
-    searchCurrentResult.classList.add('search-form_disactive');
-    printHtml(list, searchToResults(CAR, searchToBtn(e.target.searchTo), searchToArrCompire('make', 'model', 'year', 'vin', 'country')));
-}) */
+  if (!searchShowCurrentResult(CAR.length, carArrLength)) {
+    printHtml(list, searchToResults(JSON.parse(DATA), searchToBtn(e.target.searchTo), searchToArrCompire('make', 'model', 'year', 'vin', 'country')));
+  }
+  searchCurrentResult.classList.add('search-form_disactive');
+  printHtml(list, searchToResults(JSON.parse(DATA), searchToBtn(e.target.searchTo), searchToArrCompire('make', 'model', 'year', 'vin', 'country')));
+})
 // ---------------------------------------------------------------------------------
 
 /* searchFormSearch.addEventListener('submit', e => {
@@ -96,7 +96,7 @@ searchFormSearch.addEventListener('submit', e => {
  */
 
 // -----------------------------------------------------------------------------------------------------
-searchFormSearch.addEventListener('keyup', e => {
+/* searchFormSearch.addEventListener('keyup', e => {
   const searchField = ['make', 'model', 'year', 'vin', 'country'];
   const query = e.target.value.trim().toLowerCase().split(' ').filter(word => !!word);
   CAR = JSON.parse(DATA).filter(car => {
@@ -126,7 +126,7 @@ searchFormSearch.addEventListener('submit', e => {
   printHtml(list, CAR);
   if (CAR.length !== carArrLength) CAR = JSON.parse(DATA);
 })
-// -------------------------------------------------------------------------------
+ */
 printHtml(list, CAR);
 
 function printHtml(section, arr) {

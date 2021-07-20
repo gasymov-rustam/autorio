@@ -12,6 +12,7 @@
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <script defer src="./data.js"></script>
   <script defer src="./homework.js"></script>
+  <script defer src="./asideFilters.js"></script>
   <!--        <meta name="keywords" content="home,work">-->
   <!--        <meta http-equiv="refresh" content="10">-->
 </head>
@@ -20,20 +21,54 @@
   <div class="container">
     <h1 class="headname">autorio</h1>
   </div>
-  <main class="container content">
-    <div class="search-form">
-      <form class="search-form__search" id="search">
-        <label>
-          <input type="text" name="searchResult" id="searchResult"
-            class="search-form__searchResult search-form_disactive" disabled>
-        </label>
-        <label>
-          <input type="search" name="searchTo" id="searchTo" class="search-form__searchTo"
-            placeholder="Поиск по критериям" />
-          <button type="submit" class="searchBtn">search</button>
-        </label>
-      </form>
-      <div class="search-form__filter">
+  <div class="container">
+    <aside class="sideBarFilters">
+      <h3 class="sideBarFilters__headname">Filters by:</h3>
+      <div class="sideBarFilters__filterBy">
+        <div class="sideBarFilters__filterByMake">
+          <h4 class="sideBarFilters__filterName">By manufacturer</h4>
+            <form class="sideBarFilters__form" id="filterByManufacturer">
+              <!-- <label class="sideBarFilters__inscription">
+                <input type="checkbox" id="filter">
+                <span>BMW</span>
+              </label> -->
+            </form>
+        </div>
+        <div class="sideBarFilters__filterByTransmisssion">
+          <h4 class="sideBarFilters__filterName">By transmission</h4>
+            <form class="sideBarFilters__form" id="filterByTransmission">
+              <!-- <label class="sideBarFilters__inscription">
+                <input type="checkbox" id="filter">
+                <span>BMW</span>
+              </label> -->
+            </form>
+        </div>
+        <div class="sideBarFilters__filterByCountry">
+          <h4 class="sideBarFilters__filterName">By Country</h4>
+            <form class="sideBarFilters__form" id="filterByCountry">
+              <!-- <label class="sideBarFilters__inscription">
+                <input type="checkbox" id="filter">
+                <span>BMW</span>
+              </label> -->
+            </form>          
+        </div>
+        <!-- <button id="formResults" class="sideBarFilters__filtersBtnResults">Search</button> -->
+      </div>
+    </aside>
+    <main class="content">
+      <div class="search-form ">
+        <form class="search-form__search" id="search">
+          <label>
+            <input type="text" name="searchResult" id="searchResult"
+              class="search-form__searchResult search-form_disactive" disabled>
+          </label>
+          <label>
+            <input type="search" name="searchTo" id="searchTo" class="search-form__searchTo"
+              placeholder="Поиск по критериям" />
+            <button type="submit" class="searchBtn">search</button>
+          </label>
+        </form>
+        <!-- <div class="search-form__filter">
         <div class="search-form__filterBy" id="filterBy">
           <input type="checkbox" id="filterCountry" value="1" />
           <label for="filterCountry">filter by Country</label>
@@ -42,26 +77,26 @@
           <input type="checkbox" id="filterWithout" value="3" />
           <label for="filterRating">without filters</label>
         </div>
-      </div>
+      </div> -->
 
-      <select name="" class="search-form__sortPrice" id="sortBy">
-        <option hidden>to sort</option>
-        <option value="price/1">price to highest</option>
-        <option value="price/-1">price to lowest</option>
-        <option value="rating/1">rating to highest</option>
-        <option value="rating/-1">rating to lowest</option>
-        <option value="model/1">model to highest</option>
-        <option value="model/-1">model to lowest</option>
-      </select>
+        <select name="" class="search-form__sortPrice" id="sortBy">
+          <option hidden>to sort</option>
+          <option value="price/1">price to highest</option>
+          <option value="price/-1">price to lowest</option>
+          <option value="rating/1">rating to highest</option>
+          <option value="rating/-1">rating to lowest</option>
+          <option value="model/1">model to highest</option>
+          <option value="model/-1">model to lowest</option>
+        </select>
 
-      <div class="search-form__square" id="search-form__square">
-        <button class="search-form__btn active" data-type="1">&#8862;</button>
-        <button class="search-form__btn" data-type="2">&#8863;</button>
+        <div class="search-form__square" id="search-form__square">
+          <button class="search-form__btn active" data-type="1">&#8862;</button>
+          <button class="search-form__btn" data-type="2">&#8863;</button>
+        </div>
       </div>
-    </div>
-    <aside class="filters"></aside>
-    <section class="list cols-1" id="list">
-      <!--        <div class="card">
+      <!-- <aside class="filters"></aside> -->
+      <section class="list cols-1" id="list">
+        <!--        <div class="card">
                     <img src="http://dummyimage.com/153x232.jpg/cc0000/ffffff" alt="" class="car-photo">
                     <div class="car-info">
                         <h2 class="car-info__make">"BMW"</h2>q`
@@ -95,8 +130,9 @@
                         </p>
                     </div>
                 </div>-->
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 </body>
 
 </html>

@@ -7,7 +7,6 @@ const list = document.getElementById("list");
 const searchFormSquare = document.getElementById("search-form__square");
 const searchFormSort = document.getElementById("sortBy");
 const searchFormSearch = document.getElementById('search');
-const searchFormFilter = document.getElementById("filterBy");
 const searchCurrentResult = document.getElementById('searchResult');
 const carArrLength = CAR.length;
 
@@ -224,31 +223,3 @@ searchFormSort.addEventListener('change', e => {
   CAR.sort(sortTo(CAR, key, order));
   printHtml(list, CAR)
 })
-
-function filterBy(arr, key) {
-  return arr.filter((filter) => filter[key]);
-}
-
-searchFormFilter.addEventListener("change", (e) => {
-  const currentInput = e.target.closest("input");
-  Array.from(searchFormFilter.children).forEach((inp) => {
-    if (inp === currentInput) {
-      inp.checked;
-      if (inp.value == 1) {
-        filterNewArrFromCar = filterBy(CAR, "country");
-        printHtml(list, filterNewArrFromCar);
-        console.log(filterNewArrFromCar);
-      } else if (inp.value == 2) {
-        filterNewArrFromCar = filterBy(CAR, "rating");
-        printHtml(list, filterNewArrFromCar);
-        console.log(filterNewArrFromCar);
-      } else if (inp.value == 3) {
-        filterNewArrFromCar = CAR;
-        printHtml(list, filterNewArrFromCar);
-        console.log(filterNewArrFromCar);
-      }
-    } else {
-      inp.checked = false;
-    }
-  });
-});

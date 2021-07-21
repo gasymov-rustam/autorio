@@ -1,6 +1,7 @@
 const filterByManufacturer = document.getElementById('filterByManufacturer');
 const filterByTransmission = document.getElementById('filterByTransmission');
 const filterByCountry = document.getElementById('filterByCountry');
+const searchFiltersBtn = document.getElementById('formResults');
 
 function arrNewFromProperty(arr, smartKey) {
     let CARMake = [];
@@ -35,31 +36,42 @@ filterGenerationField(filterByCountry, arrNewFromProperty(CAR, 'country'));
 
 function currentFilterAllCars(id, pos) {
     let currentInp = pos.closest('input')
-    let arr = [];
+    // let arr = [];
+    let str = '';
     Array.from(id.children).forEach(label => {
         Array.from(label.children).forEach(labelChild => {
             if (labelChild.closest('input')) {
                 if (labelChild === pos) {
+                    if (labelChild.checked){
                     labelChild.checked;
-                    arr.push(labelChild.value.trim().toLowerCase())
+                    str = labelChild.value.trim().toLowerCase();
+                }
                 } else {
                     labelChild.checked = false;
                 }
             }
         })
     });
-    return arr;
+    return str;
 }
 
+let filterResultofManufacturer = '', filterResultofTransmission = '', filterResultofCountry = '';
+
 filterByManufacturer.addEventListener('change', e => {
-    printHtml(list, searchToResults(JSON.parse(DATA), currentFilterAllCars(filterByManufacturer, e.target), searchToArrCompire('make', 'transmission', 'country')));
+   filterResultofManufacturer = currentFilterAllCars(filterByManufacturer, e.target);
 });
 
-
 filterByTransmission.addEventListener('change', e => {
-    printHtml(list, searchToResults(JSON.parse(DATA), currentFilterAllCars(filterByTransmission, e.target), searchToArrCompire('make', 'transmission', 'country')));
+    filterResultofTransmission = currentFilterAllCars(filterByTransmission, e.target)
 });
 
 filterByCountry.addEventListener('change', e => {
-    printHtml(list, searchToResults(JSON.parse(DATA), currentFilterAllCars(filterByCountry, e.target), searchToArrCompire('make', 'transmission', 'country')));
+    filterResultofCountry = currentFilterAllCars(filterByCountry, e.target);
 });
+
+searchFiltersBtn.addEventListener('click', e => {
+    let filterResult = [];
+    filterResult.push(filterResultofManufacturer, filterResultofTransmission, filterResultofCountry);
+    console.log(filterResult);
+    printHtml(list, searchToResults(JSON.parse(DATA), filterResult, searchToArrCompire('make', 'transmission', 'country')));
+})

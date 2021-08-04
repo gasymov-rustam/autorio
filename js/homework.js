@@ -279,7 +279,6 @@ filterFormEl.addEventListener('submit', e => {
     }, []);
     return values;
   })
-  console.log(query);
 
   /* CAR = JSON.parse(DATA).filter(car =>{
     return query.every(values => {

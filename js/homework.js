@@ -289,10 +289,10 @@ filterFormEl.addEventListener('submit', e => {
     })
   }) */
 
- /*  CAR = JSON.parse(DATA).filter(car=>{
+  CAR = JSON.parse(DATA).filter(car=>{
     return query.every((values, idx) => {
       return values.length > 0 ? values.includes(String(car[filterField[idx]])) : true;
     })
   })
-  printHtml(list, CAR) */
+  printHtml(list, CAR)
 })

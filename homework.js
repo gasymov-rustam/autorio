@@ -10,7 +10,15 @@ const searchFormSearch = document.getElementById('search');
 const searchCurrentResult = document.getElementById('searchResult');
 const carArrLength = CAR.length;
 
-searchFormSquare.addEventListener('click', e => {
+/* searchFormSquare.addEventListener('click', e => {
+  const currentBtn = e.target.closest('button');
+  if (currentBtn) {
+    const type = currentBtn.dataset.type;
+    const listCurrentClass = Array.from(list.classList).find( word => word.includes('cols'));
+    console.log(listCurrentClasss);
+  }
+}) */
+/* searchFormSquare.addEventListener('click', e => {
   const currentBtn = e.target.closest('button');
   if (currentBtn) {
     const type = currentBtn.dataset.type;
@@ -26,7 +34,7 @@ searchFormSquare.addEventListener('click', e => {
     })
   }
 })
-
+ */
 // ------------------------------------------------------------------------------------------
 function searchToArrCompire() {
   const searchField = Array.from(arguments);

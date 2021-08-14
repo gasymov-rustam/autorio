@@ -5,9 +5,13 @@ const searchFormSquare = document.getElementById("search-form__square");
 const searchFormSort = document.getElementById("sortBy");
 const searchFormSearch = document.getElementById('search');
 const searchCurrentResult = document.getElementById('searchResult');
-const filterFormEl = document.getElementById('filterForm')
+const filterFormEl = document.getElementById('filterForm');
+const allCarsBtn = document.getElementById('allCars');
+const favoritesCarsBtn = document.getElementById('favoritesCars')
+const deleteCarsBtn = document.getElementById('deleteCars')
 const filterField = ['make', 'transmission', 'color'];
 const carArrLength = CAR.length;
+let newArrWithCarId = [], newCAR = [];
 
 searchFormSquare.addEventListener('click', e => {
   const currentBtn = e.target.closets('button');
@@ -78,16 +82,23 @@ function carCard(card) {
   }
 
   const CONSUME = `<dl>
-  <dt class="car-info__consume_road">road: ${card.consume?.road || "not indicated"} </dt>
-  <dt class="car-info__consume_city">city: ${card.consume?.city || "not indicated"} </dt>
-  <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || "not indicated"}</dt>
-</dl>`;
+                    <dt class="car-info__consume_road">road: ${card.consume?.road || "not indicated"} </dt>
+                    <dt class="car-info__consume_city">city: ${card.consume?.city || "not indicated"} </dt>
+                    <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || "not indicated"}</dt>
+                  </dl>`;
 
-  return `<div class="card">
-          <img src="${card.img}" alt="${card.make} ${card.model}" class="car-photo">
+  return `<div class="card" data-id="${card.id}">
+            <img src="${card.img}" alt="${card.make} ${card.model}" class="car-photo">
           <div class="car-info">
-          <h2 class="car-info__make">"${card.make}"</h2>
-          <h3 class="car-info__model">"${card.model}"</h3>
+            <h2 class="car-info__make">"${card.make}"</h2>
+            <h3 class="car-info__model">"${card.model}"</h3>
+            <div class="car-info__favorites">
+              <label>
+                      <input type="checkbox" name="${card.id}" class="car-info__favoritesInp" id="favorites" hidden>
+                      <span class="firstHeart"><i class="far fa-heart"></i></span>
+                      <span class="secondHeart"><i class="fas fa-heart"></i></span>
+              </label>
+            </div>
           <dl>
           <div class="car-info__country">
           <dt>country -</dt>
@@ -136,8 +147,77 @@ function carCard(card) {
           </dl>
           </div>
         </div>`;
-
 }
+
+function createRedHeart(selectorAccrodingToCss, itemFromStorage) {
+  document.querySelectorAll(selectorAccrodingToCss).forEach(input => {
+    if (window.localStorage.getItem(itemFromStorage)) {
+      Array.from(JSON.parse(localStorage.getItem(itemFromStorage))).forEach(id => {
+        if (input.name === id) {
+          input.checked = true;
+        }
+      })
+    }
+  })
+}
+
+document.addEventListener("DOMContentLoaded", createRedHeart('#favorites', 'carsFromStorage'));
+
+list.addEventListener('click', e => {
+  newArrWithCarId = Array.from(document.querySelectorAll('#favorites')).reduce((total, input) => {
+    if (input.checked) total.push(input.name);
+    return total;
+  }, []);
+
+  if (!window.localStorage.getItem('carsFromStorage')) {
+    window.localStorage.setItem('carsFromStorage', JSON.stringify([]));
+  }
+
+  let carsToFavorite = Array.from(new Set(Array.from(JSON.parse(window.localStorage.getItem('carsFromStorage'))).concat(newArrWithCarId)));
+  window.localStorage.setItem('carsFromStorage', JSON.stringify(carsToFavorite));
+  console.log(carsToFavorite);
+
+})
+
+allCarsBtn.addEventListener('click', e => {
+  newArrWithCarId = [];
+  printHtml(list, JSON.parse(DATA));
+
+  createRedHeart('#favorites', 'carsFromStorage');
+})
+
+favoritesCarsBtn.addEventListener('click', e => {
+  newCAR = [];
+  let carsToFavorite = Array.from(JSON.parse(window.localStorage.getItem('carsFromStorage')));
+  if (carsToFavorite.length !== 0) {
+    newCAR = JSON.parse(DATA).filter(car => {
+      return carsToFavorite.some(value => {
+        if (value === car.id) {
+          return car;
+        }
+      })
+    })
+    printHtml(list, newCAR)
+    createRedHeart('#favorites', 'carsFromStorage');
+  }
+})
+
+deleteCarsBtn.addEventListener('click', e=> {
+  window.localStorage.removeItem('carsFromStorage');
+  printHtml(list, CAR);
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 function sortTo(arr, smartKey, order) {
   if (arr.length > 0) {

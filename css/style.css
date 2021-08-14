@@ -191,6 +191,17 @@ dt {
     gap: 5px;
 }
 
+.search-form__favorites {
+    border: 1px solid darkgray;
+    border-radius: 4px;
+    padding: 4px 8px;
+    filter:drop-shadow(2px 2px 6px #858586);
+    background: rgb(190, 190, 190);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .search-form__filterBy {
     display: flex;
     gap: 10px;
@@ -305,6 +316,35 @@ dt {
     text-transform: uppercase;
     margin-left: 10px;
 }
+
+.car-info__favorites{
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+}
+
+.firstHeart, .secondHeart {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.secondHeart {
+    color: red;
+    visibility: hidden;
+}
+
+.car-info__favoritesInp:checked ~ span.firstHeart{
+    visibility: hidden;
+}
+
+.car-info__favoritesInp:checked ~ span.secondHeart{
+    visibility: visible;
+}
+
 
 .car-info__country {
     width: 100%;

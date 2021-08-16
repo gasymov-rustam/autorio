@@ -163,20 +163,18 @@ function createRedHeart(selectorAccrodingToCss, itemFromStorage) {
 
 document.addEventListener("DOMContentLoaded", createRedHeart('#favorites', 'carsFromStorage'));
 
+if (!window.localStorage.getItem('carsFromStorage')) {
+  window.localStorage.setItem('carsFromStorage', JSON.stringify([]));
+}
+
 list.addEventListener('click', e => {
   newArrWithCarId = Array.from(document.querySelectorAll('#favorites')).reduce((total, input) => {
     if (input.checked) total.push(input.name);
     return total;
   }, []);
-
-  if (!window.localStorage.getItem('carsFromStorage')) {
-    window.localStorage.setItem('carsFromStorage', JSON.stringify([]));
-  }
-
-  let carsToFavorite = Array.from(new Set(Array.from(JSON.parse(window.localStorage.getItem('carsFromStorage'))).concat(newArrWithCarId)));
+  let carsToFavorite = (JSON.parse(window.localStorage.getItem('carsFromStorage'))).concat(newArrWithCarId);
+  carsToFavorite = Array.from(new Set(carsToFavorite));
   window.localStorage.setItem('carsFromStorage', JSON.stringify(carsToFavorite));
-  console.log(carsToFavorite);
-
 })
 
 allCarsBtn.addEventListener('click', e => {
@@ -188,7 +186,7 @@ allCarsBtn.addEventListener('click', e => {
 
 favoritesCarsBtn.addEventListener('click', e => {
   newCAR = [];
-  let carsToFavorite = Array.from(JSON.parse(window.localStorage.getItem('carsFromStorage')));
+  let carsToFavorite = JSON.parse(window.localStorage.getItem('carsFromStorage'));
   if (carsToFavorite.length !== 0) {
     newCAR = JSON.parse(DATA).filter(car => {
       return carsToFavorite.some(value => {
@@ -206,7 +204,6 @@ deleteCarsBtn.addEventListener('click', e=> {
   window.localStorage.removeItem('carsFromStorage');
   printHtml(list, CAR);
 })
-
 
 
 

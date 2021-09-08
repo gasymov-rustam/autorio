@@ -17,24 +17,24 @@ let CAR = [],
   newCars = [],
   url = ['/data/data.json', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'];
 
-function createNewDataFromFetch (url) {
-  let abd = url.map(link => {
-     fetch(link)
-     .then(result => result.json())
-     .then(data => {
-      CAR.push(data)
-      if (CAR.length > 1){
-        [CAR, currency] = CAR;
-        currency = currency.find(res => res ?.ccy === 'USD')?.sale;
-        printHtml(list, CAR);
-        renderFilterForm(filterFormEl, CAR);
-      }
-       })
-     .catch(error => console.warn(error));
-   }, [])
- }
- createNewDataFromFetch(url);
- 
+function createNewDataFromFetch(url) {
+  url.map(link => {
+    fetch(link)
+      .then(result => result.json())
+      .then(data => {
+        CAR.push(data)
+        if (CAR.length > 1) {
+          [CAR, currency] = CAR;
+          currency = currency.find(res => res.ccy === 'USD').sale;
+          printHtml(list, CAR);
+          renderFilterForm(filterFormEl, CAR);
+        }
+      })
+      .catch(error => console.warn(error));
+  }, [])
+}
+createNewDataFromFetch(url);
+
 
 // async function loadCarsArray() {
 //   try {
@@ -171,7 +171,6 @@ function sortTo(arr, smartKey, order) {
 searchFormSort.addEventListener('change', e => {
   const currentInput = e.target.value.trim().toLowerCase().split('/');
   const [key, order] = currentInput;
-  console.log(!!newCars);
   if (newCars.length === 0) {
     CAR.sort(sortTo(CAR, key, order));
     printHtml(list, CAR)
@@ -184,7 +183,6 @@ searchFormSort.addEventListener('change', e => {
 searchFormSearch.addEventListener('keyup', e => {
   const searchFields = ['make', 'model', 'year', 'vin', 'country'];
   const query = e.target.value.trim().toLowerCase().split(' ').filter(word => !!word);
-  console.log(query);
   newCars = CAR.filter(car => {
     return query.every(word => {
       return searchFields.some(field => {
@@ -211,12 +209,16 @@ searchFormSearch.addEventListener('submit', e => {
   } else {
     newCars.length === 0 ? printHtml(list, CAR) : printHtml(list, newCars);
   }
+  console.log(newCars);
+  setTimeout(() => {
+    document.querySelectorAll('form').forEach(element => element.reset())
+  }, 500);
   // e.target.searchTo.value = '';
- /*  document.querySelectorAll('form').forEach(element => {
-    if (e.code !== 'Enter'){
-      element.reset()};
-    }) */
-    // e.target.reset();
+  /*  document.querySelectorAll('form').forEach(element => {
+     if (e.code !== 'Enter'){
+       element.reset()};
+     }) */
+  // e.target.reset();
 })
 
 // -----------------------------------------------------------------------------------------------------

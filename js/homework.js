@@ -14,43 +14,43 @@ const filterField = ['make', 'transmission', 'color'];
 let carArrLength = 0,
   currency = 0;
 let CAR = [],
-  newCars = [];
+  newCars = [],
+  url = ['/data/data.json', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'];
 
-// fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')
-// .then(res => res.json())
-// .then(value => {
-//   currency = value.find(res => res?.ccy === 'USD')
-//   currency = +currency?.sale;
-//   currency = +currency.toFixed(2);
-//   console.log(currency);
-// })
-// .catch(error => console.warn(error));
+function createNewDataFromFetch (url) {
+  let abd = url.map(link => {
+     fetch(link)
+     .then(result => result.json())
+     .then(data => {
+      CAR.push(data)
+      if (CAR.length > 1){
+        [CAR, currency] = CAR;
+        currency = currency.find(res => res ?.ccy === 'USD')?.sale;
+        printHtml(list, CAR);
+        renderFilterForm(filterFormEl, CAR);
+      }
+       })
+     .catch(error => console.warn(error));
+   }, [])
+ }
+ createNewDataFromFetch(url);
+ 
 
-// fetch('/data/data.json')
-//   .then(data => data.json())
-//   .then(cars => {
-//     CAR = cars;
-//     carArrLength = CAR.length;
+// async function loadCarsArray() {
+//   try {
+//     const cars = await fetch('/data/data.json');
+//     CAR = await cars.json();
+//     const value = await (await fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')).json()
+//     currency = value.find(res => res ?.ccy === 'USD')?.sale;
+//     // currency = +currency?.sale;
+//     // currency = +currency.toFixed(2);
 //     printHtml(list, CAR);
-//     return cars;
-//   })
-//   .catch(error => console.warn(error));
-
-async function loadCarsArray() {
-  try {
-    const cars = await fetch('/data/data.json');
-    CAR = await cars.json();
-    const value = await (await fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')).json()
-    currency = value.find(res => res ?.ccy === 'USD')?.sale;
-    // currency = +currency?.sale;
-    // currency = +currency.toFixed(2);
-    printHtml(list, CAR);
-    renderFilterForm(filterFormEl, CAR);
-  } catch {
-    console.warn(error);
-  }
-}
-loadCarsArray();
+//     renderFilterForm(filterFormEl, CAR);
+//   } catch {
+//     console.warn(error);
+//   }
+// }
+// loadCarsArray();
 
 function printHtml(section, dataArray) {
   section.innerHTML = carsArray(dataArray).join('');
@@ -171,7 +171,8 @@ function sortTo(arr, smartKey, order) {
 searchFormSort.addEventListener('change', e => {
   const currentInput = e.target.value.trim().toLowerCase().split('/');
   const [key, order] = currentInput;
-  if (newCars === 0) {
+  console.log(!!newCars);
+  if (newCars.length === 0) {
     CAR.sort(sortTo(CAR, key, order));
     printHtml(list, CAR)
   } else {
@@ -183,6 +184,7 @@ searchFormSort.addEventListener('change', e => {
 searchFormSearch.addEventListener('keyup', e => {
   const searchFields = ['make', 'model', 'year', 'vin', 'country'];
   const query = e.target.value.trim().toLowerCase().split(' ').filter(word => !!word);
+  console.log(query);
   newCars = CAR.filter(car => {
     return query.every(word => {
       return searchFields.some(field => {
@@ -209,7 +211,12 @@ searchFormSearch.addEventListener('submit', e => {
   } else {
     newCars.length === 0 ? printHtml(list, CAR) : printHtml(list, newCars);
   }
-  document.querySelectorAll('form').forEach(element => element.reset());
+  // e.target.searchTo.value = '';
+ /*  document.querySelectorAll('form').forEach(element => {
+    if (e.code !== 'Enter'){
+      element.reset()};
+    }) */
+    // e.target.reset();
 })
 
 // -----------------------------------------------------------------------------------------------------

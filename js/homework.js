@@ -31,7 +31,7 @@ function createNewDataFromFetch(url) {
         }
       })
       .catch(error => console.warn(error));
-  }, [])
+  })
 }
 createNewDataFromFetch(url);
 
@@ -209,7 +209,6 @@ searchFormSearch.addEventListener('submit', e => {
   } else {
     newCars.length === 0 ? printHtml(list, CAR) : printHtml(list, newCars);
   }
-  console.log(newCars);
   setTimeout(() => {
     document.querySelectorAll('form').forEach(element => element.reset())
   }, 500);

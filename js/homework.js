@@ -19,7 +19,7 @@ let CAR = [],
 
 function createNewDataFromFetch(url) {
   url.map(link => {
-    fetch(link)
+    fetch([link])
       .then(result => result.json())
       .then(data => {
         CAR.push(data)

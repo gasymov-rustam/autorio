@@ -15,7 +15,7 @@ let carArrLength = 0,
   currency = 0;
 let CAR = [],
   newCars = [],
-  url = ['/data/data.json', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'];
+  url = ['./data/data.json', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'];
 
 function createNewDataFromFetch(url) {
   url.forEach(link => {

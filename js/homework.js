@@ -18,7 +18,7 @@ let CAR = [],
   url = ['/data/data.json', 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'];
 
 function createNewDataFromFetch(url) {
-  url.map(link => {
+  url.forEach(link => {
     fetch(link)
       .then(result => result.json())
       .then(data => {

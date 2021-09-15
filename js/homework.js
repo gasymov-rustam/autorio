@@ -1,7 +1,7 @@
 if (!window.localStorage.getItem("carsFromStorage"))
-  window.localStorage.setItem("carsFromStorage", JSON.stringify([]));
+    window.localStorage.setItem("carsFromStorage", JSON.stringify([]));
 let carsFromStorage = JSON.parse(
-  window.localStorage.getItem("carsFromStorage")
+    window.localStorage.getItem("carsFromStorage")
 );
 
 const list = document.getElementById("list");
@@ -15,32 +15,50 @@ const favoritesCarsBtn = document.getElementById("favoritesCars");
 const deleteCarsBtn = document.getElementById("deleteCars");
 const filterField = ["make", "transmission", "color"];
 let carArrLength = 0,
-  currency = 0;
+    currency = 0;
 let cars = [];
 let carsReference = [];
 let url = [
     "./data/data.json",
     "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5",
-  ];
+];
 
-fetch("./data/data.json")
-  .then((res) => res.json())
-  .then((data) => {
-    carsReference = data;
-    carArrLength = carsReference.length;
-    printHtml(list, carsReference);
-    renderFilterForm(filterFormEl, carsReference);
-  })
-  .catch((error) => console.warn(error));
+axios
+    .get("./data/data.json")
+    .then((res) => {
+        carsReference = res.data;
+        carArrLength = carsReference.length;
+        printHtml(list, carsReference);
+        renderFilterForm(filterFormEl, carsReference);
+    })
+    .catch((error) => console.warn(error));
 
-fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
-  .then((res) => res.json())
-  .then((data) => {
-    currency = data;
-    currency = currency.find((res) => res.ccy === "USD").sale;
-    printHtml(list, carsReference);
-  })
-  .catch((error) => console.warn(error));
+axios
+    .get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
+    .then((res) => {
+        currency = res.data[0]?.sale;
+        printHtml(list, carsReference);
+    })
+    .catch((error) => console.warn(error));
+
+// fetch("./data/data.json")
+//   .then((res) => res.json())
+//   .then((data) => {
+//     carsReference = data;
+//     carArrLength = carsReference.length;
+//     printHtml(list, carsReference);
+//     renderFilterForm(filterFormEl, carsReference);
+//   })
+//   .catch((error) => console.warn(error));
+
+// fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
+//   .then((res) => res.json())
+//   .then((data) => {
+//     currency = data;
+//     currency = currency.find((res) => res.ccy === "USD").sale;
+//     printHtml(list, carsReference);
+//   })
+//   .catch((error) => console.warn(error));
 
 // function createNewDataFromFetch(url) {
 //   url.map((link) => {
@@ -66,8 +84,6 @@ fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
 //     CAR = await cars.json();
 //     const value = await (await fetch('https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5')).json()
 //     currency = value.find(res => res ?.ccy === 'USD')?.sale;
-//     // currency = +currency?.sale;
-//     // currency = +currency.toFixed(2);
 //     printHtml(list, CAR);
 //     renderFilterForm(filterFormEl, CAR);
 //   } catch {
@@ -77,48 +93,48 @@ fetch("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
 // loadCarsArray();
 
 function printHtml(section, dataArray) {
-  section.innerHTML = carsArray(dataArray).join("");
+    section.innerHTML = carsArray(dataArray).join("");
 }
 
 function carsArray(dataArray) {
-  return dataArray.map((car) => carCard(car));
+    return dataArray.map((car) => carCard(car));
 }
 
 function carCard(card) {
-  let str = "";
-  for (let i = 0; i < 5; i++) {
-    if (card.rating > i + 0.5) {
-      str += `<i class="fas fa-star"></i></i>&#x20`;
-    } else if (card.rating === i + 0.5) {
-      str += `<i class="fas fa-star-half-alt"></i>&#x20`;
-    } else {
-      str += `<i class="far fa-star"></i>&#x20`;
+    let str = "";
+    for (let i = 0; i < 5; i++) {
+        if (card.rating > i + 0.5) {
+            str += `<i class="fas fa-star"></i></i>&#x20`;
+        } else if (card.rating === i + 0.5) {
+            str += `<i class="fas fa-star-half-alt"></i>&#x20`;
+        } else {
+            str += `<i class="far fa-star"></i>&#x20`;
+        }
     }
-  }
 
-  const CONSUME = `<dl>
+    const CONSUME = `<dl>
                     <dt class="car-info__consume_road">road: ${
-                      card.consume?.road || "not indicated"
-                    } </dt>
+                        card.consume?.road || "not indicated"
+                    }</dt>
                     <dt class="car-info__consume_city">city: ${
-                      card.consume?.city || "not indicated"
-                    } </dt>
+                        card.consume?.city || "not indicated"
+                    }</dt>
                     <dt class="car-info__consume_mixed">mixed: ${
-                      card.consume?.mixed || "not indicated"
+                        card.consume?.mixed || "not indicated"
                     }</dt>
                   </dl>`;
 
-  return `<div class="card" data-id="${card.id}">
+    return `<div class="card" data-id="${card.id}">
             <img src="${card.img}" alt="${card.make} ${
-    card.model
-  }" class="car-photo">
+        card.model
+    }" class="car-photo">
             <div class="car-info">
               <h2 class="car-info__make">"${card.make}"</h2>
               <h3 class="car-info__model">"${card.model}"</h3>
               <div class="car-info__favorites">
               <label>
                 <input type="checkbox" ${
-                  carsFromStorage.includes(card.id) ? "checked" : ""
+                    carsFromStorage.includes(card.id) ? "checked" : ""
                 } class="car-info__favoritesInp" hidden>
                 <span class="firstHeart"><i class="far fa-heart"></i></span>
                 <span class="secondHeart"><i class="fas fa-heart"></i></span>
@@ -143,8 +159,12 @@ function carCard(card) {
                 <div class="car-info__price">
                   <dt>price in dollars -</dt>
                   <dd>${card.price}&#x20$</dd>
-                  <dt>price in hryvnia -</dt>
-                  <dd>${Math.round(card.price * currency)}&#x20&#8372;</dd>
+                  <dt>${currency > 0 ? "price in hryvnia -" : ""}</dt>
+                  <dd>${
+                      currency > 0
+                          ? `${Math.round(card.price * currency)} &#x20 &#8372;`
+                          : ""
+                  }</dd>
                 </div>
                 <div class="car-info__engine-volume">
                   <dt>engine volume -</dt>
@@ -176,106 +196,106 @@ function carCard(card) {
 }
 
 searchFormSquare.addEventListener("click", (e) => {
-  const currentBtn = e.target.closest("button");
-  if (currentBtn) {
-    const type = currentBtn.dataset.type;
-    const listCurrentClass = Array.from(list.classList).find((className) =>
-      className.includes("col")
-    );
-    list.classList.remove(listCurrentClass);
-    list.classList.add(`cols-${type}`);
-    Array.from(searchFormSquare.children).forEach((btn) => {
-      if (btn === currentBtn) {
-        btn.classList.add("active");
-      } else {
-        btn.classList.remove("active");
-      }
-    });
-  }
+    const currentBtn = e.target.closest("button");
+    if (currentBtn) {
+        const type = currentBtn.dataset.type;
+        const listCurrentClass = Array.from(list.classList).find((className) =>
+            className.includes("col")
+        );
+        list.classList.remove(listCurrentClass);
+        list.classList.add(`cols-${type}`);
+        Array.from(searchFormSquare.children).forEach((btn) => {
+            if (btn === currentBtn) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+    }
 });
 
 function sortTo(arr, smartKey, order) {
-  if (typeof arr[0][smartKey] === "string") {
-    return (a, b) => a[smartKey].localeCompare(b[smartKey]) * order;
-  } else {
-    return (a, b) => (a[smartKey] - b[smartKey]) * order;
-  }
+    if (typeof arr[0][smartKey] === "string") {
+        return (a, b) => a[smartKey].localeCompare(b[smartKey]) * order;
+    } else {
+        return (a, b) => (a[smartKey] - b[smartKey]) * order;
+    }
 }
 
 searchFormSort.addEventListener("change", (e) => {
-  const currentInput = e.target.value.trim().toLowerCase().split("/");
-  const [key, order] = currentInput;
-  if (cars.length === 0) {
-    carsReference.sort(sortTo(carsReference, key, order));
-    printHtml(list, carsReference);
-  } else {
-    cars.sort(sortTo(carsReference, key, order));
-    printHtml(list, cars);
-  }
+    const currentInput = e.target.value.trim().toLowerCase().split("/");
+    const [key, order] = currentInput;
+    if (cars.length === 0) {
+        carsReference.sort(sortTo(carsReference, key, order));
+        printHtml(list, carsReference);
+    } else {
+        cars.sort(sortTo(cars, key, order));
+        printHtml(list, cars);
+    }
 });
 
 searchFormSearch.addEventListener("keydown", (e) => {
-  const searchFields = ["make", "model", "year", "vin", "country"];
-  const query = e.target.value
-    .trim()
-    .toLowerCase()
-    .split(" ")
-    .filter((word) => !!word);
-  cars = carsReference.filter((car) => {
-    return query.every((word) => {
-      return searchFields.some((field) => {
-        return String(car[field]).toLowerCase().includes(word);
-      });
+    const searchFields = ["make", "model", "year", "vin", "country"];
+    const query = e.target.value
+        .trim()
+        .toLowerCase()
+        .split(" ")
+        .filter((word) => !!word);
+    cars = carsReference.filter((car) => {
+        return query.every((word) => {
+            return searchFields.some((field) => {
+                return String(car[field]).toLowerCase().includes(word);
+            });
+        });
     });
-  });
 
-  if (cars.length !== carArrLength) {
-    searchCurrentResult.classList.remove("search-form_disactive");
-    searchCurrentResult.value = `found ${cars.length} results`;
-  } else {
-    searchCurrentResult.classList.add("search-form_disactive");
-  }
+    if (cars.length !== carArrLength) {
+        searchCurrentResult.classList.remove("search-form_disactive");
+        searchCurrentResult.value = `found ${cars.length} results`;
+    } else {
+        searchCurrentResult.classList.add("search-form_disactive");
+    }
 });
 
 searchFormSearch.addEventListener("submit", (e) => {
-  e.preventDefault();
-  searchCurrentResult.classList.add("search-form_disactive");
-  if (e.target.searchTo.value.length === 0) {
-    printHtml(list, carsReference);
-  } else {
-    printHtml(list, cars);
-  }
-  document.querySelectorAll("form").forEach((element) => element.reset());
+    e.preventDefault();
+    searchCurrentResult.classList.add("search-form_disactive");
+    if (e.target.searchTo.value.length === 0) {
+        printHtml(list, carsReference);
+    } else {
+        printHtml(list, cars);
+    }
+    document.querySelectorAll("form").forEach((element) => element.reset());
 });
 
 // -----------------------------------------------------------------------------------------------------
 
 function renderFilterForm(section, dataArray) {
-  const fieldsHTML = `<div class="fieldsets-wrap">
+    const fieldsHTML = `<div class="fieldsets-wrap">
                         ${createFilterFieldset(dataArray).join("")}
                       </div>`;
-  section.insertAdjacentHTML("afterbegin", fieldsHTML);
+    section.insertAdjacentHTML("afterbegin", fieldsHTML);
 }
 
 function createFilterFieldset(dataArray) {
-  return filterField.map((field) => {
-    const values = Array.from(new Set(dataArray.map((car) => car[field])));
-    return createFilterFielset(field, values);
-  });
+    return filterField.map((field) => {
+        const values = Array.from(new Set(dataArray.map((car) => car[field])));
+        return createFilterFielset(field, values);
+    });
 }
 
 function createFilterFielset(field, values) {
-  const fieldHTML = values
-    .map((value) => createFilterField(field, value))
-    .join("");
-  return `<fieldset>
+    const fieldHTML = values
+        .map((value) => createFilterField(field, value))
+        .join("");
+    return `<fieldset>
             <legend>${field}</legend>
             ${fieldHTML}
           </fieldset>`;
 }
 
 function createFilterField(field, value) {
-  return `<label>
+    return `<label>
             <input type="checkbox" name="${field}" value="${value}">
             <span>${value}</span>
           </label>`;
@@ -299,53 +319,61 @@ function createFilterField(field, value) {
 // })
 
 filterFormEl.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const query = filterField.map((field) => {
-    const values = Array.from(filterFormEl[field]).reduce((total, input) => {
-      if (input.checked) total.push(input.value);
-      return total;
-    }, []);
-    return values;
-  });
-  cars = carsReference.filter((car) => {
-    return query.every((values, idx) => {
-      return values.length > 0 ? values.includes(car[filterField[idx]]) : true;
+    e.preventDefault();
+    const query = filterField.map((field) => {
+        const values = Array.from(filterFormEl[field]).reduce(
+            (total, input) => {
+                if (input.checked) total.push(input.value);
+                return total;
+            },
+            []
+        );
+        return values;
     });
-  });
-  printHtml(list, cars);
-  document.querySelectorAll("form").forEach((element) => element.reset());
+    cars = carsReference.filter((car) => {
+        return query.every((values, idx) => {
+            return values.length > 0
+                ? values.includes(car[filterField[idx]])
+                : true;
+        });
+    });
+    printHtml(list, cars);
+    document.querySelectorAll("form").forEach((element) => {
+        searchCurrentResult.classList.add("search-form_disactive");
+        element.reset();
+    });
 });
 
 list.addEventListener("click", (e) => {
-  const currentInput = e.target.closest(".car-info__favoritesInp");
-  if (currentInput) {
-    const carId = currentInput.closest(".card").dataset.id;
-    const carIdx = carsFromStorage.findIndex((id) => id === carId);
-    if (carIdx === -1) {
-      carsFromStorage.push(carId);
-    } else {
-      carsFromStorage.splice(carIdx, 1);
+    const currentInput = e.target.closest(".car-info__favoritesInp");
+    if (currentInput) {
+        const carId = currentInput.closest(".card").dataset.id;
+        const carIdx = carsFromStorage.findIndex((id) => id === carId);
+        if (carIdx === -1) {
+            carsFromStorage.push(carId);
+        } else {
+            carsFromStorage.splice(carIdx, 1);
+        }
+        window.localStorage.setItem(
+            "carsFromStorage",
+            JSON.stringify(carsFromStorage)
+        );
     }
-    window.localStorage.setItem(
-      "carsFromStorage",
-      JSON.stringify(carsFromStorage)
-    );
-  }
 });
 
 favoritesCarsBtn.addEventListener("click", (e) => {
-  cars = carsFromStorage.map((id) => {
-    return carsReference.find((car) => car.id === id);
-  });
-  printHtml(list, cars);
+    cars = carsFromStorage.map((id) => {
+        return carsReference.find((car) => car.id === id);
+    });
+    printHtml(list, cars);
 });
 
 deleteCarsBtn.addEventListener("click", (e) => {
-  window.localStorage.removeItem("carsFromStorage");
-  carsFromStorage = [];
-  printHtml(list, carsReference);
+    window.localStorage.removeItem("carsFromStorage");
+    carsFromStorage = [];
+    printHtml(list, carsReference);
 });
 
 allCarsBtn.addEventListener("click", (e) => {
-  printHtml(list, carsReference);
+    printHtml(list, carsReference);
 });

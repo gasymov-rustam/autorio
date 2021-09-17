@@ -1,8 +1,5 @@
-if (!window.localStorage.getItem("carsFromStorage"))
-    window.localStorage.setItem("carsFromStorage", JSON.stringify([]));
-let carsFromStorage = JSON.parse(
-    window.localStorage.getItem("carsFromStorage")
-);
+if (!window.localStorage.getItem("carsFromStorage")) window.localStorage.setItem("carsFromStorage", JSON.stringify([]));
+let carsFromStorage = JSON.parse(window.localStorage.getItem("carsFromStorage"));
 
 const list = document.getElementById("list");
 const searchFormSquare = document.getElementById("search-form__square");
@@ -18,16 +15,13 @@ let carArrLength = 0,
     currency = 0;
 let cars = [];
 let carsReference = [];
-let url = [
-    "./data/data.json",
-    "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5",
-];
+let url = ["./data/data.json", "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"];
 
 axios
     .get("./data/data.json")
     .then((res) => {
-        carsReference = res.data;
         carArrLength = carsReference.length;
+        carsReference = res.data;
         printHtml(list, carsReference);
         renderFilterForm(filterFormEl, carsReference);
     })
@@ -36,10 +30,28 @@ axios
 axios
     .get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
     .then((res) => {
-        currency = res.data[0]?.sale;
+        currency = res.data[0].sale;
         printHtml(list, carsReference);
+        renderFilterForm(filterFormEl, carsReference);
     })
     .catch((error) => console.warn(error));
+// axios
+//     .get("./data/data.json")
+//     .then((res) => {
+//         carsReference = res.data;
+//         carArrLength = carsReference.length;
+//         printHtml(list, carsReference);
+//         renderFilterForm(filterFormEl, carsReference);
+//     })
+//     .catch((error) => console.warn(error));
+
+// axios
+//     .get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5")
+//     .then((res) => {
+//         currency = res.data[0]?.sale;
+//         printHtml(list, carsReference);
+//     })
+//     .catch((error) => console.warn(error));
 
 // fetch("./data/data.json")
 //   .then((res) => res.json())
@@ -92,50 +104,36 @@ axios
 // }
 // loadCarsArray();
 
-function printHtml(section, dataArray) {
-    section.innerHTML = carsArray(dataArray).join("");
+function printHtml(elem, array) {
+    elem.innerHTML = carsArray(array).join("");
 }
 
-function carsArray(dataArray) {
-    return dataArray.map((car) => carCard(car));
+function carsArray(array) {
+    return array.map((car) => carCard(car));
 }
 
 function carCard(card) {
     let str = "";
     for (let i = 0; i < 5; i++) {
-        if (card.rating > i + 0.5) {
-            str += `<i class="fas fa-star"></i></i>&#x20`;
-        } else if (card.rating === i + 0.5) {
-            str += `<i class="fas fa-star-half-alt"></i>&#x20`;
-        } else {
-            str += `<i class="far fa-star"></i>&#x20`;
-        }
+        if (card.rating > i + 0.5) str += `<i class="fas fa-star"></i></i>&#x20`;
+        if (card.rating === i + 0.5) str += `<i class="fas fa-star-half-alt"></i>&#x20`;
+        if (card.rating < i + 0.5) str += `<i class="far fa-star"></i>&#x20`;
     }
 
     const CONSUME = `<dl>
-                    <dt class="car-info__consume_road">road: ${
-                        card.consume?.road || "not indicated"
-                    }</dt>
-                    <dt class="car-info__consume_city">city: ${
-                        card.consume?.city || "not indicated"
-                    }</dt>
-                    <dt class="car-info__consume_mixed">mixed: ${
-                        card.consume?.mixed || "not indicated"
-                    }</dt>
+                    <dt class="car-info__consume_road">road: ${card.consume?.road || "not indicated"}</dt>
+                    <dt class="car-info__consume_city">city: ${card.consume?.city || "not indicated"}</dt>
+                    <dt class="car-info__consume_mixed">mixed: ${card.consume?.mixed || "not indicated"}</dt>
                   </dl>`;
 
     return `<div class="card" data-id="${card.id}">
-            <img src="${card.img}" alt="${card.make} ${
-        card.model
-    }" class="car-photo">
+            <img src="${card.img}" alt="${card.make} ${card.model}" class="car-photo">
             <div class="car-info">
               <h2 class="car-info__make">"${card.make}"</h2>
               <h3 class="car-info__model">"${card.model}"</h3>
               <div class="car-info__favorites">
               <label>
-                <input type="checkbox" ${
-                    carsFromStorage.includes(card.id) ? "checked" : ""
-                } class="car-info__favoritesInp" hidden>
+                <input type="checkbox" ${carsFromStorage.includes(card.id) ? "checked" : ""} class="car-info__favoritesInp" hidden>
                 <span class="firstHeart"><i class="far fa-heart"></i></span>
                 <span class="secondHeart"><i class="fas fa-heart"></i></span>
               </label>
@@ -160,11 +158,7 @@ function carCard(card) {
                   <dt>price in dollars -</dt>
                   <dd>${card.price}&#x20$</dd>
                   <dt>${currency > 0 ? "price in hryvnia -" : ""}</dt>
-                  <dd>${
-                      currency > 0
-                          ? `${Math.round(card.price * currency)} &#x20 &#8372;`
-                          : ""
-                  }</dd>
+                  <dd>${currency > 0 ? `${Math.round(card.price * currency)} &#x20 &#8372;` : ""}</dd>
                 </div>
                 <div class="car-info__engine-volume">
                   <dt>engine volume -</dt>
@@ -199,27 +193,19 @@ searchFormSquare.addEventListener("click", (e) => {
     const currentBtn = e.target.closest("button");
     if (currentBtn) {
         const type = currentBtn.dataset.type;
-        const listCurrentClass = Array.from(list.classList).find((className) =>
-            className.includes("col")
-        );
+        const listCurrentClass = Array.from(list.classList).find((className) => className.includes("col"));
         list.classList.remove(listCurrentClass);
         list.classList.add(`cols-${type}`);
         Array.from(searchFormSquare.children).forEach((btn) => {
-            if (btn === currentBtn) {
-                btn.classList.add("active");
-            } else {
-                btn.classList.remove("active");
-            }
+            if (btn === currentBtn) btn.classList.add("active");
+            else btn.classList.remove("active");
         });
     }
 });
 
-function sortTo(arr, smartKey, order) {
-    if (typeof arr[0][smartKey] === "string") {
-        return (a, b) => a[smartKey].localeCompare(b[smartKey]) * order;
-    } else {
-        return (a, b) => (a[smartKey] - b[smartKey]) * order;
-    }
+function sortTo(arr, key, order) {
+    if (typeof arr[0][key] === "string") return (a, b) => a[key].localeCompare(b[key]) * order;
+    if (typeof arr[0][key] !== "string") return (a, b) => (a[key] - b[key]) * order;
 }
 
 searchFormSort.addEventListener("change", (e) => {
@@ -228,13 +214,14 @@ searchFormSort.addEventListener("change", (e) => {
     if (cars.length === 0) {
         carsReference.sort(sortTo(carsReference, key, order));
         printHtml(list, carsReference);
-    } else {
+    }
+    if (cars.length !== 0) {
         cars.sort(sortTo(cars, key, order));
         printHtml(list, cars);
     }
 });
 
-searchFormSearch.addEventListener("keydown", (e) => {
+searchFormSearch.addEventListener("keyup", (e) => {
     const searchFields = ["make", "model", "year", "vin", "country"];
     const query = e.target.value
         .trim()
@@ -248,9 +235,8 @@ searchFormSearch.addEventListener("keydown", (e) => {
             });
         });
     });
-
-    if (cars.length !== carArrLength) {
-        searchCurrentResult.classList.remove("search-form_disactive");
+    if (carsReference.length !== carArrLength) {
+        searchCurrentResult.classList.add("search-form_disactive");
         searchCurrentResult.value = `found ${cars.length} results`;
     } else {
         searchCurrentResult.classList.add("search-form_disactive");
@@ -260,34 +246,28 @@ searchFormSearch.addEventListener("keydown", (e) => {
 searchFormSearch.addEventListener("submit", (e) => {
     e.preventDefault();
     searchCurrentResult.classList.add("search-form_disactive");
-    if (e.target.searchTo.value.length === 0) {
-        printHtml(list, carsReference);
-    } else {
-        printHtml(list, cars);
-    }
-    document.querySelectorAll("form").forEach((element) => element.reset());
+    printHtml(list, cars);
+    e.target.reset();
 });
 
 // -----------------------------------------------------------------------------------------------------
 
-function renderFilterForm(section, dataArray) {
-    const fieldsHTML = `<div class="fieldsets-wrap">
-                        ${createFilterFieldset(dataArray).join("")}
+function renderFilterForm(elem, array) {
+    const filterHTML = `<div class="fieldsets-wrap">
+                        ${createFilterFieldset(array).join("")}             
                       </div>`;
-    section.insertAdjacentHTML("afterbegin", fieldsHTML);
+    elem.insertAdjacentHTML("afterbegin", filterHTML);
 }
 
-function createFilterFieldset(dataArray) {
+function createFilterFieldset(array) {
     return filterField.map((field) => {
-        const values = Array.from(new Set(dataArray.map((car) => car[field])));
+        const values = Array.from(new Set(array.map((car) => car[field])));
         return createFilterFielset(field, values);
     });
 }
 
 function createFilterFielset(field, values) {
-    const fieldHTML = values
-        .map((value) => createFilterField(field, value))
-        .join("");
+    const fieldHTML = values.map((value) => createFilterField(field, value)).join("");
     return `<fieldset>
             <legend>${field}</legend>
             ${fieldHTML}
@@ -301,64 +281,50 @@ function createFilterField(field, value) {
           </label>`;
 }
 
-// filterFormEl.addEventListener('submit', e => {
-//   e.preventDefault();
-//   const query = filterField.map(field => {
-//     const values = Array.from(filterFormEl[field]).map(input => input.checked && input.value).filter(word => !!word);
-//     return values;
-//   })
-//   newCars = CAR.filter(car => {
-//     return query.every(values => {
-//       return filterField.some(field => {
-//         return values.length > 0 ? values.includes(String(car[field])) : true;
-//       })
-//     })
-//   })
-//   printHtml(list, newCars);
-// document.querySelectorAll('form').forEach(element => element.reset());
-// })
+// filterFormEl.addEventListener("submit", (e) => {
+//     e.preventDefault();
+//     const query = filterField.map((field) => {
+//         const values = Array.from(filterFormEl[field])
+//             .map((input) => input.checked && input.value)
+//             .filter((word) => !!word);
+//         return values;
+//     });
+//     cars = carsReference.filter((car) => {
+//         return query.every((values) => {
+//             return filterField.some((field) => {
+//                 return values.length > 0 ? values.includes(String(car[field])) : true;
+//             });
+//         });
+//     });
+//     printHtml(list, cars);
+// });
 
 filterFormEl.addEventListener("submit", (e) => {
     e.preventDefault();
     const query = filterField.map((field) => {
-        const values = Array.from(filterFormEl[field]).reduce(
-            (total, input) => {
-                if (input.checked) total.push(input.value);
-                return total;
-            },
-            []
-        );
+        const values = Array.from(filterFormEl[field]).reduce((total, input) => {
+            if (input.checked) total.push(input.value);
+            return total;
+        }, []);
         return values;
     });
     cars = carsReference.filter((car) => {
         return query.every((values, idx) => {
-            return values.length > 0
-                ? values.includes(car[filterField[idx]])
-                : true;
+            return values.length > 0 ? values.includes(String(car[filterField[idx]])) : true;
         });
     });
     printHtml(list, cars);
-    document.querySelectorAll("form").forEach((element) => {
-        searchCurrentResult.classList.add("search-form_disactive");
-        element.reset();
-    });
 });
 
 list.addEventListener("click", (e) => {
     const currentInput = e.target.closest(".car-info__favoritesInp");
     if (currentInput) {
-        const carId = currentInput.closest(".card").dataset.id;
-        const carIdx = carsFromStorage.findIndex((id) => id === carId);
-        if (carIdx === -1) {
-            carsFromStorage.push(carId);
-        } else {
-            carsFromStorage.splice(carIdx, 1);
-        }
-        window.localStorage.setItem(
-            "carsFromStorage",
-            JSON.stringify(carsFromStorage)
-        );
+        const carID = currentInput.closest(".card").dataset.id;
+        const carIDX = carsFromStorage.findIndex((id) => id === carID);
+        if (carIDX === -1) carsFromStorage.push(carID);
+        if (carIDX !== -1) carsFromStorage.splice(carIDX, 1);
     }
+    window.localStorage.setItem("carsFromStorage", JSON.stringify(carsFromStorage));
 });
 
 favoritesCarsBtn.addEventListener("click", (e) => {
